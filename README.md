@@ -6,8 +6,8 @@ You might want to tweak the variables defined at `pkg/constants`, depending on y
 This repository shows tracing for restful request, grpc server request, and custom function(such as database connection/request).
 
 Key points:
-- Two services: cart, product. Service product has set up grpc server and rest server. Service cart only sets up rest server. Service cart will send request to service product grpc server.
-- To propagate grpc server tracing, use [grpc middleware](https://github.com/grpc-ecosystem/go-grpc-middleware).
+- Two services: cart, product. Service product has set up [grpc server](https://github.com/smiletrl/go_jaeger_tracing/blob/master/service.product/internal/rpc/server/main.go#L17) and rest server. Service cart only sets up rest server. Service cart will [send grpc request](https://github.com/smiletrl/go_jaeger_tracing/blob/master/service.cart/main.go#L65) to service product grpc server.
+- To enable grpc server tracing, use [grpc middleware](https://github.com/grpc-ecosystem/go-grpc-middleware).
 - Start the root span at [`(p *provider) Middleware()`](https://github.com/smiletrl/go_jaeger_tracing/blob/master/pkg/tracing/tracing.go#L52). This middleware will create a root span for every request.
 - Pass the propagating span relation using [`opentracing.StartSpanFromContext()`](https://github.com/smiletrl/go_jaeger_tracing/blob/master/pkg/tracing/tracing.go#L94). So we will see a request span to service product grpc server has a parent request span to service cart, using the `context.Context`.
 - Create custom span like `span, ctx := tracing.StartSpan(c, "cart item create")`. See [`service.cart/main.go - SaveCart()`](https://github.com/smiletrl/go_jaeger_tracing/blob/master/service.cart/main.go#L97).
