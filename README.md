@@ -15,3 +15,24 @@ See the demo result like
 
 Jaeger UI
 ![Jaeger UI](https://raw.githubusercontent.com/smiletrl/go_jaeger_tracing/master/assets/Jeager%20UI.png)
+
+## Commands
+
+Test Post command
+
+```
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"sku_id":"12","quantity":1}' \
+  http://127.0.0.1:1325/cart
+```
+
+Proto Update
+
+```
+cd service.product/internal
+
+protoc --go_out=. --go_opt=paths=source_relative \
+    --go-grpc_out=. --go-grpc_opt=paths=source_relative \
+    proto/product.proto
+```
