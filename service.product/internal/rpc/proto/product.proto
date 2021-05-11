@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option go_package = "github.com/smiletrl/micro_ecommerce/service.product/internl/rpc/proto";
+
+package proto;
+
+// product service definition.
+service Product {
+  // given a sku id, and return its stock
+  rpc GetSkuStock (SkuID) returns(Stock){}
+}
+
+message SkuID {
+  string value = 1;
+}
+
+message Stock {
+  int32 value = 1;
+}
