@@ -97,7 +97,7 @@ func (p product) GetSkuStock(c context.Context, skuID string) (int, error) {
 func SaveCart(c context.Context, skuID string, quantity int, tracing tracing.Provider) error {
 	// save it to redis/postgres
 	span, ctx := tracing.StartSpan(c, "cart item create")
-	defer span.Finish()
+	defer tracing.FinishSpan(span)
 
 	// pass ctx to db related functions.
 	fmt.Println(ctx)

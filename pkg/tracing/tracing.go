@@ -8,7 +8,6 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/opentracing/opentracing-go"
-	"github.com/opentracing/opentracing-go/ext"
 	"github.com/uber/jaeger-client-go"
 	jaegercfg "github.com/uber/jaeger-client-go/config"
 )
@@ -20,7 +19,10 @@ type Provider interface {
 	// set up root span
 	Middleware() echo.MiddlewareFunc
 
-	StartSpan(c context.Context, operationName string, opts ...opentracing.StartSpanOption) (opentracing.Span, context.Context)
+	StartSpan(c context.Context, operationName string) (opentracing.Span, context.Context)
+
+	// finsh span, primarily for mock purpose
+	FinishSpan(span opentracing.Span)
 }
 
 type provider struct{}
@@ -65,14 +67,8 @@ func (p *provider) Middleware() echo.MiddlewareFunc {
 
 			if req.URL.Path != "/health" {
 				// create a root span for this request
-				tracer := opentracing.GlobalTracer()
-				spanCtx, _ := tracer.Extract(
-					opentracing.HTTPHeaders,
-					opentracing.HTTPHeadersCarrier(req.Header),
-				)
-
-				span, ctx = p.StartSpan(c.Request().Context(), operationName, ext.RPCServerOption(spanCtx))
-				defer span.Finish()
+				span, ctx = p.StartSpan(c.Request().Context(), operationName)
+				defer p.FinishSpan(span)
 
 				r := c.Request().WithContext(ctx)
 				c.SetRequest(r)
@@ -90,8 +86,12 @@ func (p *provider) Middleware() echo.MiddlewareFunc {
 	}
 }
 
-func (p *provider) StartSpan(ctx context.Context, operationName string, opts ...opentracing.StartSpanOption) (opentracing.Span, context.Context) {
-	return opentracing.StartSpanFromContext(ctx, operationName, opts...)
+func (p *provider) StartSpan(ctx context.Context, operationName string) (opentracing.Span, context.Context) {
+	return opentracing.StartSpanFromContext(ctx, operationName)
+}
+
+func (p provider) FinishSpan(span opentracing.Span) {
+	span.Finish()
 }
 
 func (p *provider) setSpanTags(req *http.Request, res *echo.Response, ip string, span opentracing.Span) {
