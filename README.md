@@ -11,6 +11,7 @@ Key points:
 - Start the root span at [`(p *provider) Middleware()`](https://github.com/smiletrl/go_jaeger_tracing/blob/master/pkg/tracing/tracing.go#L54). This middleware will create a root span for every restful request.
 - Pass the propagating span relation using [`opentracing.StartSpanFromContext()`](https://github.com/smiletrl/go_jaeger_tracing/blob/master/pkg/tracing/tracing.go#L90). So we will see a request span to service product grpc server has a parent request span to service cart, using the `context.Context`.
 - Create custom span like `span, ctx := tracing.StartSpan(c, "cart item create")`. See [`service.cart/main.go - SaveCart()`](https://github.com/smiletrl/go_jaeger_tracing/blob/master/service.cart/main.go#L97).
+- Use mock tracing provider for test.
 
 You might want to check the full example at repository [micro ecommerce](https://github.com/smiletrl/micro_ecommerce).
 
