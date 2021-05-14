@@ -1,5 +1,5 @@
 # Go tracing
-This is an example for jaeger tracing in go for micro services. It assumes [Jaeger](https://www.jaegertracing.io/) has been installed at kubernetes already, and you are already familiar with [Opentracing](https://opentracing.io/).
+This is an example for jaeger tracing in go for micro services. It assumes [Jaeger](https://www.jaegertracing.io/) has been installed already (at kubernetes, or no-k8s env), and you are already familiar with [Opentracing](https://opentracing.io/).
 
 You might want to tweak the variables defined at `pkg/constants`, depending on your installment.
 
