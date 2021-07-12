@@ -2,9 +2,10 @@ package tracing
 
 import (
 	"context"
+	"io"
+
 	"github.com/labstack/echo/v4"
 	"github.com/opentracing/opentracing-go"
-	"io"
 )
 
 type mockProvider struct{}

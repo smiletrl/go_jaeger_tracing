@@ -7,10 +7,11 @@ import (
 
 	"github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
-	"github.com/smiletrl/go_jaeger_tracing/pkg/constants"
-	pb "github.com/smiletrl/go_jaeger_tracing/service.product/internal/rpc/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
+
+	"github.com/smiletrl/go_jaeger_tracing/pkg/constants"
+	pb "github.com/smiletrl/go_jaeger_tracing/service.product/internal/rpc/proto"
 )
 
 // Register the rpc server for product service.

@@ -2,14 +2,16 @@ package external
 
 import (
 	"context"
+	"time"
+
 	"github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/keepalive"
+
 	"github.com/smiletrl/go_jaeger_tracing/pkg/constants"
 	"github.com/smiletrl/go_jaeger_tracing/pkg/tracing"
 	pb "github.com/smiletrl/go_jaeger_tracing/service.product/internal/rpc/proto"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/keepalive"
-	"time"
 )
 
 type Client interface {

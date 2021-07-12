@@ -1,11 +1,13 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/labstack/echo/v4"
+
 	"github.com/smiletrl/go_jaeger_tracing/pkg/constants"
 	"github.com/smiletrl/go_jaeger_tracing/pkg/tracing"
 	rpcserver "github.com/smiletrl/go_jaeger_tracing/service.product/internal/rpc/server"
-	"net/http"
 )
 
 func main() {

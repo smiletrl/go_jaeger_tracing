@@ -3,11 +3,13 @@ package main
 import (
 	"context"
 	"fmt"
+	"net/http"
+
 	"github.com/labstack/echo/v4"
+
 	"github.com/smiletrl/go_jaeger_tracing/pkg/constants"
 	"github.com/smiletrl/go_jaeger_tracing/pkg/tracing"
 	productClient "github.com/smiletrl/go_jaeger_tracing/service.product/external"
-	"net/http"
 )
 
 func main() {
